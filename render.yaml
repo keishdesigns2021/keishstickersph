@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: keish-stickers-apparel
+    name: keishstickersph
     env: node
     plan: free
     buildCommand: npm install
