@@ -79,10 +79,17 @@
 
   productCancelBtn.addEventListener('click', resetProductForm);
 
+  function updateCategorySuggestions(products) {
+    const categories = [...new Set(products.map((p) => p.category).filter(Boolean))].sort();
+    const datalist = document.getElementById('category-suggestions');
+    datalist.innerHTML = categories.map((c) => `<option value="${escapeHtml(c)}">`).join('');
+  }
+
   function loadProducts() {
     fetch('/api/products')
       .then((r) => r.json())
       .then((products) => {
+        updateCategorySuggestions(products);
         const rows = document.getElementById('product-rows');
         if (!products.length) {
           rows.innerHTML = '<tr><td colspan="6">No products yet. Add your first one!</td></tr>';

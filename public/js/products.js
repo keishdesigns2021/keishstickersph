@@ -49,8 +49,8 @@
   }
 
   const catalogContainer = document.getElementById('product-catalog');
-  if (catalogContainer) {
-    const pills = document.querySelectorAll('.filter-pills .pill');
+  const pillsContainer = document.getElementById('filter-pills');
+  if (catalogContainer && pillsContainer) {
     let allProducts = [];
 
     function render(category) {
@@ -60,28 +60,39 @@
         : '<p class="empty-state">No products in this category yet.</p>';
     }
 
-    pills.forEach((pill) => {
-      pill.addEventListener('click', () => {
-        pills.forEach((p) => p.classList.remove('active'));
-        pill.classList.add('active');
-        const category = pill.getAttribute('data-category');
-        const url = new URL(window.location);
-        if (category === 'All') url.searchParams.delete('category');
-        else url.searchParams.set('category', category);
-        window.history.replaceState({}, '', url);
-        render(category);
+    function setActivePill(category) {
+      pillsContainer.querySelectorAll('.pill').forEach((p) => {
+        p.classList.toggle('active', p.getAttribute('data-category') === category);
       });
-    });
+    }
+
+    function selectCategory(category) {
+      setActivePill(category);
+      const url = new URL(window.location);
+      if (category === 'All') url.searchParams.delete('category');
+      else url.searchParams.set('category', category);
+      window.history.replaceState({}, '', url);
+      render(category);
+    }
+
+    function renderPills(categories) {
+      pillsContainer.innerHTML = ['All', ...categories]
+        .map((c) => `<button class="pill" data-category="${escapeHtml(c)}">${escapeHtml(c)}</button>`)
+        .join('');
+      pillsContainer.querySelectorAll('.pill').forEach((pill) => {
+        pill.addEventListener('click', () => selectCategory(pill.getAttribute('data-category')));
+      });
+    }
 
     fetch('/api/products')
       .then((r) => r.json())
       .then((products) => {
         allProducts = products;
+        const categories = [...new Set(products.map((p) => p.category).filter(Boolean))].sort();
+        renderPills(categories);
         const params = new URLSearchParams(window.location.search);
         const initialCategory = params.get('category') || 'All';
-        pills.forEach((p) => {
-          p.classList.toggle('active', p.getAttribute('data-category') === initialCategory);
-        });
+        setActivePill(initialCategory);
         render(initialCategory);
       })
       .catch(() => {

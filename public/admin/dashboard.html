@@ -39,10 +39,8 @@
               </div>
               <div class="field">
                 <label for="p-category">Category</label>
-                <select id="p-category" name="category" required>
-                  <option value="Stickers">Stickers</option>
-                  <option value="Apparel">Apparel</option>
-                </select>
+                <input type="text" id="p-category" name="category" list="category-suggestions" placeholder="e.g. Stickers, Apparel, Keychains…" required>
+                <datalist id="category-suggestions"></datalist>
               </div>
               <div class="field">
                 <label for="p-price">Price (₱)</label>
