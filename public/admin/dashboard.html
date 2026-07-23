@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Dashboard | Keish Stickers & Apparel PH</title>
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="admin-shell">
+    <div class="admin-topbar">
+      <div class="container">
+        <div class="logo" style="color: var(--white);"><span class="blob"></span> Admin Dashboard</div>
+        <div style="display:flex; align-items:center; gap:16px;">
+          <span id="whoami" style="font-size: 0.85rem; color: rgba(255,255,255,0.7);"></span>
+          <a href="/" class="btn btn-outline btn-sm" style="border-color: white; color: white;">View Site</a>
+          <button id="logout-btn" class="btn btn-danger btn-sm">Log Out</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="admin-tabs">
+        <button class="admin-tab active" data-tab="products">Products</button>
+        <button class="admin-tab" data-tab="inquiries">Inquiries <span id="inquiry-count" class="badge unread" style="display:none;"></span></button>
+      </div>
+
+      <div class="admin-panel active" id="panel-products">
+        <div class="admin-grid">
+          <div class="form-card">
+            <h3 id="product-form-title">Add Product</h3>
+            <div id="product-form-message" class="form-message"></div>
+            <form id="product-form">
+              <input type="hidden" id="product-id" name="id">
+              <div class="field">
+                <label for="p-name">Name</label>
+                <input type="text" id="p-name" name="name" required>
+              </div>
+              <div class="field">
+                <label for="p-category">Category</label>
+                <select id="p-category" name="category" required>
+                  <option value="Stickers">Stickers</option>
+                  <option value="Apparel">Apparel</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="p-price">Price (₱)</label>
+                <input type="number" id="p-price" name="price" min="0" step="0.01" required>
+              </div>
+              <div class="field">
+                <label for="p-description">Description</label>
+                <textarea id="p-description" name="description"></textarea>
+              </div>
+              <div class="field">
+                <label for="p-image">Photo (optional)</label>
+                <input type="file" id="p-image" name="image" accept="image/png, image/jpeg, image/webp, image/gif">
+              </div>
+              <div class="field checkbox-field">
+                <input type="checkbox" id="p-featured" name="featured">
+                <label for="p-featured" style="margin: 0;">Feature on homepage</label>
+              </div>
+              <div style="display:flex; gap: 10px;">
+                <button type="submit" class="btn btn-primary" id="product-submit-btn">Add Product</button>
+                <button type="button" class="btn btn-outline" id="product-cancel-btn" style="display:none;">Cancel</button>
+              </div>
+            </form>
+          </div>
+
+          <div>
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Name</th>
+                  <th>Category</th>
+                  <th>Price</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="product-rows">
+                <tr><td colspan="6">Loading…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-panel" id="panel-inquiries">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>From</th>
+              <th>Contact</th>
+              <th>Message</th>
+              <th>Date</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="inquiry-rows">
+            <tr><td colspan="5">Loading…</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <script src="/admin/admin.js"></script>
+</body>
+</html>

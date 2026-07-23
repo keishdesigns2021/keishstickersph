@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Admin Login | Keish Stickers & Apparel PH</title>
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="login-shell">
+    <div class="login-card">
+      <div class="logo"><span class="blob"></span></div>
+      <h2>Admin Login</h2>
+      <p style="color: var(--gray); margin-bottom: 24px;">Manage your products and inquiries.</p>
+      <div id="form-message" class="form-message"></div>
+      <form id="login-form">
+        <div class="field">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" required autofocus>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Log In</button>
+      </form>
+      <p style="margin-top: 20px;"><a href="/" style="color: var(--gray); font-size: 0.85rem;">&larr; Back to site</a></p>
+    </div>
+  </div>
+  <script src="/admin/admin.js"></script>
+</body>
+</html>

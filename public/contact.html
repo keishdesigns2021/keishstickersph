@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact & Get a Quote | Keish Stickers & Apparel PH</title>
+  <meta name="description" content="Get in touch with Keish Stickers & Apparel PH for a custom quote on stickers and apparel.">
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <a href="/" class="logo"><span class="blob"></span> Keish Stickers & Apparel PH</a>
+      <nav class="main-nav">
+        <a href="/" data-nav="/">Home</a>
+        <a href="/products.html" data-nav="/products.html">Products</a>
+        <a href="/contact.html" data-nav="/contact.html" class="active">Contact</a>
+        <a href="#" data-config="facebook" target="_blank" rel="noopener">Facebook</a>
+      </nav>
+      <button class="nav-toggle" aria-label="Toggle menu">&#9776;</button>
+    </div>
+  </header>
+
+  <section style="padding-top: 50px;">
+    <div class="container">
+      <div class="section-head">
+        <span class="tag">Let's talk</span>
+        <h2>Get a Quote</h2>
+        <p>Tell us what you need and we'll get back to you with pricing and timelines.</p>
+      </div>
+      <div class="contact-layout">
+        <div class="contact-info-card">
+          <div class="info-row">
+            <div class="icon">✉️</div>
+            <div>
+              <h4>Email</h4>
+              <a data-config="email" href="#">Loading…</a>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="icon">📞</div>
+            <div>
+              <h4>Phone / Mobile</h4>
+              <a data-config="phone" href="#">Loading…</a>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="icon">📍</div>
+            <div>
+              <h4>Address</h4>
+              <span data-config="address">Loading…</span><br>
+              <a data-config="address-link" href="#" target="_blank" rel="noopener" style="font-size: 0.85rem;">View on Google Maps</a>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="icon">👍</div>
+            <div>
+              <h4>Facebook</h4>
+              <a data-config="facebook" href="#" target="_blank" rel="noopener">facebook.com/keishstickersph</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-card">
+          <div id="form-message" class="form-message"></div>
+          <form id="quote-form">
+            <div class="field">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" required>
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" required>
+            </div>
+            <div class="field">
+              <label for="phone">Phone (optional)</label>
+              <input type="tel" id="phone" name="phone">
+            </div>
+            <div class="field">
+              <label for="message">What do you need?</label>
+              <textarea id="message" name="message" required placeholder="Tell us about the product, quantity, and design idea…"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h4>Keish Stickers &amp; Apparel PH</h4>
+          <p>Custom stickers and apparel, printed with care in Cebu City, Philippines.</p>
+        </div>
+        <div>
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="/products.html">All Products</a></li>
+            <li><a href="/products.html?category=Stickers">Stickers</a></li>
+            <li><a href="/products.html?category=Apparel">Apparel</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4>Get in touch</h4>
+          <ul>
+            <li><a data-config="email" href="#">Loading…</a></li>
+            <li><a data-config="phone" href="#">Loading…</a></li>
+            <li><span data-config="address">Loading…</span></li>
+            <li><a data-config="facebook" href="#" target="_blank" rel="noopener">Facebook Page</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">&copy; <span id="year"></span> Keish Stickers &amp; Apparel PH. All rights reserved.</div>
+    </div>
+  </footer>
+
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+  <script src="/js/main.js"></script>
+  <script src="/js/contact.js"></script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+services:
+  - type: web
+    name: keish-stickers-apparel
+    env: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: SESSION_SECRET
+        generateValue: true
+      - key: ADMIN_USERNAME
+        sync: false
+      - key: ADMIN_PASSWORD
+        sync: false
+      - key: SHOP_NAME
+        value: Keish Stickers & Apparel PH
+      - key: SHOP_EMAIL
+        value: keishstickersph@gmail.com
+      - key: SHOP_PHONE
+        value: "+639664115197"
+      - key: SHOP_ADDRESS
+        value: F. Llamas St., Punta Princesa, Cebu City
+      - key: SHOP_FACEBOOK
+        value: https://www.facebook.com/keishstickersph
+      - key: TURSO_DATABASE_URL
+        sync: false
+      - key: TURSO_AUTH_TOKEN
+        sync: false
