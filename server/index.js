@@ -8,6 +8,8 @@ const { seedAdmin, seedProducts } = require('./seed');
 const productsRouter = require('./routes/products');
 const authRouter = require('./routes/auth');
 const contactRouter = require('./routes/contact');
+const settingsRouter = require('./routes/settings');
+const servicesRouter = require('./routes/services');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -43,6 +45,8 @@ app.get('/api/config', (req, res) => {
 app.use('/api/products', productsRouter);
 app.use('/api/auth', authRouter);
 app.use('/api/contact', contactRouter);
+app.use('/api/settings', settingsRouter);
+app.use('/api/services', servicesRouter);
 
 app.use(express.static(path.join(__dirname, '..', 'public')));
 

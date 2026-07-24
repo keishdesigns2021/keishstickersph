@@ -23,7 +23,9 @@
     <div class="container">
       <div class="admin-tabs">
         <button class="admin-tab active" data-tab="products">Products</button>
+        <button class="admin-tab" data-tab="services">Services</button>
         <button class="admin-tab" data-tab="inquiries">Inquiries <span id="inquiry-count" class="badge unread" style="display:none;"></span></button>
+        <button class="admin-tab" data-tab="settings">Site Settings</button>
       </div>
 
       <div class="admin-panel active" id="panel-products">
@@ -82,6 +84,86 @@
               </tbody>
             </table>
           </div>
+        </div>
+      </div>
+
+      <div class="admin-panel" id="panel-services">
+        <div class="admin-grid">
+          <div class="form-card">
+            <h3 id="service-form-title">Add Service</h3>
+            <div id="service-form-message" class="form-message"></div>
+            <form id="service-form">
+              <input type="hidden" id="s-id" name="id">
+              <div class="field">
+                <label for="s-name">Name</label>
+                <input type="text" id="s-name" name="name" required>
+              </div>
+              <div class="field">
+                <label for="s-price">Price (optional, free text — e.g. "Starts at ₱200")</label>
+                <input type="text" id="s-price" name="price">
+              </div>
+              <div class="field">
+                <label for="s-description">Description</label>
+                <textarea id="s-description" name="description"></textarea>
+              </div>
+              <div class="field">
+                <label for="s-image">Photo (optional)</label>
+                <input type="file" id="s-image" name="image" accept="image/png, image/jpeg, image/webp, image/gif">
+              </div>
+              <div style="display:flex; gap: 10px;">
+                <button type="submit" class="btn btn-primary" id="service-submit-btn">Add Service</button>
+                <button type="button" class="btn btn-outline" id="service-cancel-btn" style="display:none;">Cancel</button>
+              </div>
+            </form>
+          </div>
+
+          <div>
+            <table class="admin-table">
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Name</th>
+                  <th>Price</th>
+                  <th></th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="service-rows">
+                <tr><td colspan="5">Loading…</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="admin-panel" id="panel-settings">
+        <div class="form-card" style="max-width: 560px;">
+          <h3>Site Settings</h3>
+          <div id="settings-form-message" class="form-message"></div>
+          <form id="settings-form">
+            <div class="field">
+              <label for="set-logo">Website Logo</label>
+              <img id="logo-preview" src="" alt="" style="display:none; width:60px; height:60px; border-radius:50%; object-fit:cover; margin-bottom:10px;">
+              <input type="file" id="set-logo" name="logo" accept="image/png, image/jpeg, image/webp, image/gif">
+              <label class="checkbox-field" style="margin-top: 10px;">
+                <input type="checkbox" id="set-clear-logo" name="clearLogo">
+                <span>Remove current logo (use default icon)</span>
+              </label>
+            </div>
+            <div class="field">
+              <label for="set-catalog-tag">Catalog Page — Small Label</label>
+              <input type="text" id="set-catalog-tag" name="catalogTag">
+            </div>
+            <div class="field">
+              <label for="set-catalog-heading">Catalog Page — Heading</label>
+              <input type="text" id="set-catalog-heading" name="catalogHeading">
+            </div>
+            <div class="field">
+              <label for="set-catalog-description">Catalog Page — Description</label>
+              <textarea id="set-catalog-description" name="catalogDescription"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Save Settings</button>
+          </form>
         </div>
       </div>
 

@@ -45,6 +45,8 @@
       document.getElementById('whoami').textContent = `Logged in as ${data.username}`;
       loadProducts();
       loadInquiries();
+      loadServices();
+      loadSettings();
     });
 
   document.getElementById('logout-btn').addEventListener('click', async () => {
@@ -223,4 +225,142 @@
         });
       });
   }
+
+  // ---------- Services ----------
+  const serviceForm = document.getElementById('service-form');
+  const serviceFormTitle = document.getElementById('service-form-title');
+  const serviceSubmitBtn = document.getElementById('service-submit-btn');
+  const serviceCancelBtn = document.getElementById('service-cancel-btn');
+  const serviceFormMessage = document.getElementById('service-form-message');
+
+  function resetServiceForm() {
+    serviceForm.reset();
+    document.getElementById('s-id').value = '';
+    serviceFormTitle.textContent = 'Add Service';
+    serviceSubmitBtn.textContent = 'Add Service';
+    serviceCancelBtn.style.display = 'none';
+  }
+
+  serviceCancelBtn.addEventListener('click', resetServiceForm);
+
+  function loadServices() {
+    fetch('/api/services')
+      .then((r) => r.json())
+      .then((services) => {
+        const rows = document.getElementById('service-rows');
+        if (!services.length) {
+          rows.innerHTML = '<tr><td colspan="5">No services yet. Add your first one!</td></tr>';
+          return;
+        }
+        rows.innerHTML = services
+          .map(
+            (s) => `
+            <tr>
+              <td>${s.imagePath ? `<img class="admin-thumb" src="${escapeHtml(s.imagePath)}" alt="">` : '<div class="admin-thumb"></div>'}</td>
+              <td>${escapeHtml(s.name)}</td>
+              <td>${escapeHtml(s.price)}</td>
+              <td>
+                <div class="row-actions">
+                  <button class="btn btn-outline btn-sm" data-edit="${s.id}">Edit</button>
+                </div>
+              </td>
+              <td>
+                <button class="btn btn-danger btn-sm" data-delete="${s.id}">Delete</button>
+              </td>
+            </tr>
+          `
+          )
+          .join('');
+
+        rows.querySelectorAll('[data-edit]').forEach((btn) => {
+          btn.addEventListener('click', () => {
+            const service = services.find((s) => s.id === Number(btn.dataset.edit));
+            if (!service) return;
+            document.getElementById('s-id').value = service.id;
+            document.getElementById('s-name').value = service.name;
+            document.getElementById('s-price').value = service.price;
+            document.getElementById('s-description').value = service.description;
+            serviceFormTitle.textContent = `Edit: ${service.name}`;
+            serviceSubmitBtn.textContent = 'Save Changes';
+            serviceCancelBtn.style.display = 'inline-flex';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          });
+        });
+
+        rows.querySelectorAll('[data-delete]').forEach((btn) => {
+          btn.addEventListener('click', async () => {
+            const service = services.find((s) => s.id === Number(btn.dataset.delete));
+            if (!service) return;
+            if (!confirm(`Delete "${service.name}"? This cannot be undone.`)) return;
+            const res = await fetch(`/api/services/${service.id}`, { method: 'DELETE' });
+            if (res.ok) loadServices();
+          });
+        });
+      });
+  }
+
+  serviceForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    serviceFormMessage.className = 'form-message';
+    const id = document.getElementById('s-id').value;
+    const formData = new FormData(serviceForm);
+
+    try {
+      const res = await fetch(id ? `/api/services/${id}` : '/api/services', {
+        method: id ? 'PUT' : 'POST',
+        body: formData,
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Could not save service');
+      serviceFormMessage.className = 'form-message success';
+      serviceFormMessage.textContent = `Saved "${data.name}".`;
+      resetServiceForm();
+      loadServices();
+    } catch (err) {
+      serviceFormMessage.className = 'form-message error';
+      serviceFormMessage.textContent = err.message;
+    }
+  });
+
+  // ---------- Site Settings ----------
+  const settingsForm = document.getElementById('settings-form');
+  const settingsFormMessage = document.getElementById('settings-form-message');
+  const logoPreview = document.getElementById('logo-preview');
+
+  function loadSettings() {
+    fetch('/api/settings')
+      .then((r) => r.json())
+      .then((settings) => {
+        document.getElementById('set-catalog-tag').value = settings.catalogTag;
+        document.getElementById('set-catalog-heading').value = settings.catalogHeading;
+        document.getElementById('set-catalog-description').value = settings.catalogDescription;
+        if (settings.logoImage) {
+          logoPreview.src = settings.logoImage;
+          logoPreview.style.display = 'block';
+        } else {
+          logoPreview.style.display = 'none';
+        }
+      });
+  }
+
+  settingsForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    settingsFormMessage.className = 'form-message';
+    const formData = new FormData(settingsForm);
+    formData.set('clearLogo', document.getElementById('set-clear-logo').checked ? '1' : '');
+
+    try {
+      const res = await fetch('/api/settings', { method: 'PUT', body: formData });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Could not save settings');
+      settingsFormMessage.className = 'form-message success';
+      settingsFormMessage.textContent = 'Settings saved.';
+      document.getElementById('set-clear-logo').checked = false;
+      document.getElementById('set-logo').value = '';
+      loadSettings();
+    } catch (err) {
+      settingsFormMessage.className = 'form-message error';
+      settingsFormMessage.textContent = err.message;
+    }
+  });
 })();

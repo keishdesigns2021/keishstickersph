@@ -36,4 +36,28 @@
       });
     })
     .catch(() => {});
+
+  fetch('/api/settings')
+    .then((r) => r.json())
+    .then((settings) => {
+      if (settings.logoImage) {
+        document.querySelectorAll('.logo .blob').forEach((blob) => {
+          const img = document.createElement('img');
+          img.src = settings.logoImage;
+          img.alt = '';
+          img.className = 'logo-img';
+          blob.replaceWith(img);
+        });
+      }
+      document.querySelectorAll('[data-settings="catalogTag"]').forEach((el) => {
+        el.textContent = settings.catalogTag;
+      });
+      document.querySelectorAll('[data-settings="catalogHeading"]').forEach((el) => {
+        el.textContent = settings.catalogHeading;
+      });
+      document.querySelectorAll('[data-settings="catalogDescription"]').forEach((el) => {
+        el.textContent = settings.catalogDescription;
+      });
+    })
+    .catch(() => {});
 })();

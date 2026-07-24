@@ -40,6 +40,24 @@ const ready = (async () => {
       read INTEGER DEFAULT 0
     )
   `);
+
+  await client.execute(`
+    CREATE TABLE IF NOT EXISTS site_settings (
+      key TEXT PRIMARY KEY,
+      value TEXT DEFAULT ''
+    )
+  `);
+
+  await client.execute(`
+    CREATE TABLE IF NOT EXISTS services (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      name TEXT NOT NULL,
+      price TEXT DEFAULT '',
+      description TEXT DEFAULT '',
+      image_data TEXT DEFAULT '',
+      created_at TEXT DEFAULT (datetime('now'))
+    )
+  `);
 })();
 
 module.exports = { client, ready };
